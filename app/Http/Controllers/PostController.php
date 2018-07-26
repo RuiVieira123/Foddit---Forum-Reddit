@@ -2,10 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +25,14 @@ class PostController extends Controller
     public function index()
     {
         //
+    }
+
+
+    public function showUserPosts($id)
+    {
+        $user = User::find('id', $id)->get();
+        $posts = $user->posts();
+        return view('posts.index_user_posts')->with(compact('posts'));
     }
 
     /**

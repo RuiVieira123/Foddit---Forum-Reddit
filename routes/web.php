@@ -17,3 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('/home', 'PostController');
+Route::resource('/', 'ThemeController');
+Route::resource('/', 'CommentController');
+
+Route::get('/posts/{id}', 'PostController@showUserPosts');
