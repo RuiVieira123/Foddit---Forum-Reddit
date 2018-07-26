@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Post;
+use App\Theme;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -24,7 +26,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::where('status', true)->paginate(15);
+
+        return view('posts.index')->with(compact("posts"));
     }
 
 
@@ -42,7 +46,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $post = new Post;
+        $themes = Theme::all();
+        return view('posts.create')->with(compact('post'))->with(compact('themes'));
     }
 
     /**
