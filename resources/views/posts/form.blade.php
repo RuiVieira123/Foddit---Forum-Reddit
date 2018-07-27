@@ -7,14 +7,18 @@
 <div class="form-group">
     <label>Theme</label>
     <div class="form-group">
-        <select class="form-control" name="brand_id">
-            <option disabled selected value=''>- - Select theme - -</option>
-            @foreach($themes as $theme)
-                <option name="" value={{$theme->id}}>
-                    {{ $theme->name }}
-                </option>
-            @endforeach
-        </select>
+        <div class="d-flex">
+            <select id="select_theme" class="form-control col-5" name="theme_id">
+                <option disabled selected value=''>- - Select theme - -</option>
+                @foreach($themes as $theme)
+                    <option name="" value={{$theme->id}}>
+                        {{ $theme->name }}
+                    </option>
+                @endforeach
+            </select>
+            <a class="col-1"></a>
+            <input id="input_theme" type="text" name="theme_name" class="form-control col-6" placeholder="New theme" value="">
+        </div>
     </div>
 </div>
 

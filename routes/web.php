@@ -11,12 +11,14 @@
 |
 */
 
+Route::get('/', 'PostController@index');
+
 Route::get('/home', 'PostController@index');
 
 Auth::routes();
 
 Route::resource('/posts', 'PostController');
-Route::resource('/', 'ThemeController');
-Route::resource('/', 'CommentController');
+Route::resource('/themes', 'ThemeController');
+Route::resource('/comments', 'CommentController');
 
 Route::get('/posts/{id}', 'PostController@showUserPosts');

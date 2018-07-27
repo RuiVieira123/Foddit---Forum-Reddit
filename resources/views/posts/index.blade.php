@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (session('alert'))
+    @if (session('error'))
         <div class="alert alert-danger">
-            {{ session('alert') }}
+            {{ session('error') }}
         </div>
     @endif
     <h1>Home</h1>
-    <p>
-        <a href="/posts/create" class="btn btn-info">Create post</a>
-    </p>
+    @auth
+        <p>
+            <a href="/posts/create" class="btn btn-info">Create post</a>
+        </p>
+    @endauth
     <table class="table">
         <thead>
         <tr>

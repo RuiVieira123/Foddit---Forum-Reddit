@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\Theme;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Instantiate a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    /**
+//     * Instantiate a new controller instance.
+//     *
+//     * @return void
+//     */
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class PostController extends Controller
 
     public function showUserPosts($id)
     {
-        $user = User::find('id', $id)->get();
+        $user = User::find($id)->get();
         $posts = $user->posts();
         return view('posts.index_user_posts')->with(compact('posts'));
     }
@@ -54,32 +55,49 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        if ($request->theme_id == null) {
+
+            $theme = new Theme();
+            $theme->name = $request->theme_name;
+            $theme->save();
+        } else {
+            $theme = Theme::find($request->theme_id);
+        }
+
+        $post = new Post();
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = Auth::id();
+        $post->theme_id = $theme->id;
+        $post->save();
+
+        return redirect('/posts');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        $user_id = Auth::id();
+        return view('posts.show')->with(compact("post"))->with(compact("user_id"));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
         //
     }
@@ -87,11 +105,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
         //
     }
@@ -99,11 +117,23 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        try {
+            $post->status = false;
+            $post->save();
+        } catch (\Exception $exception) {
+            return redirect('/posts')->with('error', 'Unable to archive!');
+        }
+
+        return redirect('/posts');
+    }
+
+    public function theme_exists($name)
+    {
+
     }
 }
