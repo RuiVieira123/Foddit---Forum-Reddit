@@ -17,15 +17,35 @@
     <h1>{{ $post->title }}</h1><br>
     <div class="form-group">
         <label for="nationality">Content</label>
-        <textarea disabled type="text" name="body" class="form-control"
-                  placeholder="No details needed... :(">{{ $post->body }}</textarea>
+             @if(empty($post->body ))
+            <pre class="form-control" style="background: #e8ecef">No details needed... :(</pre>
+            @else
+            <pre class="form-control" style="background: #e8ecef">{{ $post->body }}</pre>
+            @endif
     </div>
 
     <div class="form-group">
         <label>Comments</label><br>
         @if($post->status == true)
             @Auth
-                <a href="/comments/create/{{ $post->id }}" class="btn btn-secondary">Comment</a><br>
+                <form action="/comments/create/{{ $post->id }}" method="post">
+                    <div class="form-group">
+                        <h1>Comment on {{ $post->title }}</h1>
+                        <input hidden name="post_id" value="{{ $post->id }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Comment</label>
+                        <textarea type="text" name="body" class="form-control" placeholder="Say something positive! :)" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                        <script>
+                            function textAreaAdjust(o) {
+                                o.style.height = "1px";
+                                o.style.height = (25 + o.scrollHeight) + "px";
+                            }
+                        </script>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             @endauth
         @endif
         @if(sizeof($post->comments) != 0)

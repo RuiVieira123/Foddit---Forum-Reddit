@@ -22,4 +22,4 @@ Route::resource('/themes', 'ThemeController');
 Route::resource('/comments', 'CommentController');
 
 Route::get('/posts/{id}', 'PostController@showUserPosts');
-Route::get('/comments/create/{id}', 'CommentController@create');
+Route::get('/comments/create/{id}', 'CommentController@store');
