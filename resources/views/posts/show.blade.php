@@ -30,7 +30,8 @@
         @endif
         @if(sizeof($post->comments) != 0)
             @foreach ($post->comments as $comment)
-                <br><textarea class="form-control" disabled>{{ $comment->body }}</textarea><br>
+                <br><p>{{ $comment->user->username }}</p>
+                <pre class="form-control" style="background: #e8ecef">{{ $comment->body }}</pre>
             @endforeach
         @else
             <br><p>Be the first to comment! :)</p> <br>

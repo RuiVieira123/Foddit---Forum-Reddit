@@ -10,15 +10,6 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-//    /**
-//     * Instantiate a new controller instance.
-//     *
-//     * @return void
-//     */
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
 
     /**
      * Display a listing of the resource.
@@ -111,7 +102,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        try {
+            $post->title = $request->title;
+            $post->body = $request->body;
+            $post->save();
+            return redirect('/posts/' . $post->id);
+        } catch (\Exception $ex) {
+            return redirect('/posts')->with('alert', 'Não foi possível editar!');
+        }
     }
 
     /**
