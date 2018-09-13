@@ -19,8 +19,26 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::where('status', true)->paginate(15);
+        $themes = Theme::all();
 
-        return view('posts.index')->with(compact("posts"));
+        return view('posts.index')->with(compact("posts"))->with(compact("themes"));
+    }
+
+    /**
+     * Display a listing of the resource with filter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sortByTheme($id)
+    {
+        $posts = Post::where('status', true)->where('theme_id', $id)->paginate(15);
+        $themes = Theme::all();
+
+        if ($id == 0) {
+            return redirect('/posts');
+        } else {
+            return view('posts.index')->with(compact("posts"))->with(compact("themes"));
+        }
     }
 
 

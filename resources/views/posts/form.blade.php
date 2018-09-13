@@ -23,7 +23,7 @@
 </div>
 
 <div class="form-group">
-    <label for="nationality">Body</label>
+    <label>Body</label>
     <textarea type="text" name="body" rows="15" cols="50" class="form-control"
               placeholder="Be creative :)">{{ $post->body }}</textarea>
 </div>

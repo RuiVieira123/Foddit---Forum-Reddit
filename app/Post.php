@@ -13,7 +13,7 @@ class Post extends Model
         'body',
         'rate',
         'theme_id'
-        ];
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);

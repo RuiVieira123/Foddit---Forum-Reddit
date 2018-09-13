@@ -17,7 +17,6 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('body')->nullable();
-            $table->integer('rate')->default(1);
             $table->boolean('status')->default(true);
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

@@ -88,6 +88,7 @@
     </main>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/js/posts/filter.search.js"></script>
 <script src="/js/posts/form.js"></script>
 <script src="/js/posts/autosize.js"></script>
 <script src="/js/posts/comment.js"></script>

@@ -15,8 +15,9 @@
     </form>
     </p>
     <h1>{{ $post->title }}</h1><br>
+
     <div class="form-group">
-        <label for="nationality">Content</label>
+        <label>Content</label>
              @if(empty($post->body ))
             <pre class="form-control" style="background: #e8ecef">No details needed... :(</pre>
             @else
@@ -24,11 +25,13 @@
             @endif
     </div>
 
+    <h4> Submitted by {{ $post->user->username}}</h4>
+
     <div class="form-group">
         <label>Comments</label><br>
         @if($post->status == true)
             @Auth
-                <form action="/comments/create/{{ $post->id }}" method="post">
+                <form action="/comments/create/{{ $post->id }}" method="get">
                     <div class="form-group">
                         <h1>Comment on {{ $post->title }}</h1>
                         <input hidden name="post_id" value="{{ $post->id }}">

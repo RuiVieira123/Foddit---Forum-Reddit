@@ -7,25 +7,55 @@
         </div>
     @endif
     <h1>Home</h1>
-    @auth
-        <p>
+
+    <p>
+    <div>
+        @auth
             <a href="/posts/create" class="btn btn-info">Create post</a>
-        </p>
-    @endauth
+        @endauth
+        <form method="get" class="float-right">
+            @csrf()
+            <select id="select_theme" class="form-control col-12 bg-info text-white" name="theme_id">
+                <option disabled selected value='' class="text-white">- - Select theme - -</option>
+                <option value='0'> all</option>
+                @foreach($themes as $theme)
+                    <option name="" value={{$theme->id}}>
+                        {{ $theme->name }}
+                    </option>
+                @endforeach
+            </select>
+        </form>
+    </div>
+    </p>
+
+
     <table class="table">
         <thead>
         <tr>
-            <th>Score</th>
-            <th>Title</th>
-            <th>Date</th>
+            <th style="width: 10%;">Score</th>
+            <th style="width: 70%;">Title</th>
+            <th style="width: 10%;">Date</th>
+            <th style="width: 10%;">Comments</th>
         </tr>
         </thead>
         <tbody>
         @foreach($posts as $post)
             <tr>
-                <td>{{ $post->rate }}</td>
+                <td>
+                    <?php
+                    $count_upvotes = DB::table('user_rated_posts')->where('post_id', $post->id)->where('voted', true)->count();
+                    ?>
+                    {{ $count_upvotes }}
+                    <img src="/imgs/plus-hi.png">
+                </td>
                 <td><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></td>
                 <td>{{ date('d/m', strtotime($post->created_at)) }}</td>
+                <td style="text-align: center;">
+                    <?php
+                    $count_comments = DB::table('comments')->where('post_id', $post->id)->count();
+                    ?>
+                    {{ $count_comments }}
+                </td>
                 {{--<td>--}}
                 {{--@switch($post->status)--}}
 
