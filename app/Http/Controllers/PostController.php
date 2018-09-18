@@ -20,7 +20,6 @@ class PostController extends Controller
     {
         $posts = Post::where('status', true)->paginate(15);
         $themes = Theme::all();
-
         return view('posts.index')->with(compact("posts"))->with(compact("themes"));
     }
 

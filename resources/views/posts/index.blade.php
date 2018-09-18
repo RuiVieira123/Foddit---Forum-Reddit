@@ -46,7 +46,13 @@
                     $count_upvotes = DB::table('user_rated_posts')->where('post_id', $post->id)->where('voted', true)->count();
                     ?>
                     {{ $count_upvotes }}
-                    <img src="/imgs/plus-hi.png" class="img-upvote">
+                    @auth
+                        @if(App\Post::userHasVoted($post->id, auth()->user()->id) == 1)
+                            <img class="img-upvote" src="/imgs/upvote.png" style="max-height: 16px;max-width: 30px;margin-bottom: 7px;margin-left: 20px;" voted="1" post_id="{{ $post->id }}">
+                            @else
+                            <img class="img-upvote" src="/imgs/upvote.png" style="max-height: 16px;max-width: 30px; margin-bottom: 7px; margin-left: 20px;" voted="0" post_id="{{ $post->id }}">
+                            @endif
+                    @endauth
                 </td>
                 <td><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></td>
                 <td>{{ date('d/m', strtotime($post->created_at)) }}</td>

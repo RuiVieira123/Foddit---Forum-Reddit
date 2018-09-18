@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\UserRatedPost;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,19 +17,29 @@ class UserRatedPostController extends Controller
      */
     public function store($post_id)
     {
-        $user_rated_posts = UserRatedPost::where('post_id', $post_id)->where('user_id', Auth::id())->get();
-        if ($user_rated_posts != null) {
-            if ($user_rated_posts->voted == true) {
-                $user_rated_posts->voted = true;
+        $upvote = UserRatedPost::where('post_id', $post_id)->where('user_id', Auth::id())->first();
+        if ($upvote) {
+            if ($upvote->voted == true) {
+                $upvote->voted = false;
+
             } else {
-                $user_rated_posts->voted = false;
+                $upvote->voted = true;
             }
         } else {
             $upvote = new UserRatedPost();
+            $upvote->user_id = Auth::id();
+            $upvote->post_id = $post_id;
 
-            $upvote->save();
+            $upvote->voted = true;
+
         }
 
-        return false;
+        $upvote->save();
+
+        $json_response = new JsonResponse();
+        $json_response->setStatusCode(200);
+        $json_response->setData(array('message' => "tou"));
+
+        return $json_response;
     }
 }

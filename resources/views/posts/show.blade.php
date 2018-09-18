@@ -14,32 +14,43 @@
         @endif
     </form>
     </p>
-    <h1>{{ $post->title }}</h1><br>
-
+    <h1>{{ $post->title }}</h1>
+    <h6> {{ $post->user->username}}</h6><br>
     <div class="form-group">
-        <label>Content</label>
-             @if(empty($post->body ))
+
+        @if(empty($post->body ))
             <pre class="form-control" style="background: #e8ecef">No details needed... :(</pre>
-            @else
+        @else
             <pre class="form-control" style="background: #e8ecef">{{ $post->body }}</pre>
-            @endif
+        @endif
     </div>
 
-    <h4> Submitted by {{ $post->user->username}}</h4>
+    <br>
 
     <div class="form-group">
-        <label>Comments</label><br>
         @if($post->status == true)
-            @Auth
+            @if(sizeof($post->comments) != 0)
+                @foreach ($post->comments as $comment)
+                    <br><p>{{ $comment->user->username }}</p>
+                    <pre class="form-control" style="background: #e8ecef">{{ $comment->body }}</pre>
+                @endforeach
+            @else
+                <br><p>Be the first to comment! :)</p>
+            @endif
+
+            @guest
+                <a class="btn btn-info" href="{{ route('login') }}">{{ __('Login') }}</a>
+                <a class="btn btn-info" href="{{ route('register') }}">{{ __('Register') }}</a>
+            @else
                 <form action="/comments/create/{{ $post->id }}" method="get">
                     <div class="form-group">
-                        <h1>Comment on {{ $post->title }}</h1>
                         <input hidden name="post_id" value="{{ $post->id }}">
                     </div>
 
                     <div class="form-group">
                         <label>Comment</label>
-                        <textarea type="text" name="body" class="form-control" placeholder="Say something positive! :)" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
+                        <textarea type="text" name="body" class="form-control" placeholder="Say something positive! :)"
+                                  onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
                         <script>
                             function textAreaAdjust(o) {
                                 o.style.height = "1px";
@@ -47,17 +58,9 @@
                             }
                         </script>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-info">Submit</button>
                 </form>
-            @endauth
-        @endif
-        @if(sizeof($post->comments) != 0)
-            @foreach ($post->comments as $comment)
-                <br><p>{{ $comment->user->username }}</p>
-                <pre class="form-control" style="background: #e8ecef">{{ $comment->body }}</pre>
-            @endforeach
-        @else
-            <br><p>Be the first to comment! :)</p> <br>
+            @endguest
         @endif
     </div>
 @endsection

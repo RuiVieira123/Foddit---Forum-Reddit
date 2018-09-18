@@ -66,12 +66,6 @@
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
-                                <!-- Profile Link -->
-                                <a class="dropdown-item" href="{{ route('index_user_posts') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Profile') }}
-                                </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                       style="display: none;">
@@ -97,9 +91,8 @@
     </main>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/js/posts/upvote.js"></script>
 <script src="/js/posts/filter.search.js"></script>
 <script src="/js/posts/form.js"></script>
-<script src="/js/posts/autosize.js"></script>
-<script src="/js/posts/comment.js"></script>
 </body>
 </html>

@@ -40,4 +40,7 @@ class User extends Authenticatable
             return false;
         }
     }
+    public function userRatedPosts(){
+        return $this->hasMany(UserRatedPost::class);
+    }
 }

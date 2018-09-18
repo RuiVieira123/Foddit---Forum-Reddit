@@ -26,4 +26,19 @@ class Post extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function userRatedPosts(){
+        return $this->hasMany(UserRatedPost::class);
+    }
+
+    public static function userHasVoted($post, $user)
+    {
+        $voted = UserRatedPost::where("post_id", "=", $post)->whereAnd("user_id", "=", $user)->first();
+        if ($voted) {
+            if ($voted->voted == true) {
+                return 1;
+            } else return 0;
+        }
+        else return 0;
+    }
 }

@@ -29,4 +29,4 @@ Route::resource('/users', 'UserController');
 Route::get('/posts/{id}', 'PostController@showUserPosts');
 Route::get('/comments/create/{id}', 'CommentController@store');
 Route::get('/posts/theme/{id}', 'PostController@sortByTheme');
-Route::get('/upvote/{id}', 'UserRatedPostController@store');
+Route::post('/upvote/{post_id}', 'UserRatedPostController@store');
