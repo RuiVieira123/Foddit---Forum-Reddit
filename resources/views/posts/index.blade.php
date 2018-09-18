@@ -46,7 +46,7 @@
                     $count_upvotes = DB::table('user_rated_posts')->where('post_id', $post->id)->where('voted', true)->count();
                     ?>
                     {{ $count_upvotes }}
-                    <img src="/imgs/plus-hi.png">
+                    <img src="/imgs/plus-hi.png" class="img-upvote">
                 </td>
                 <td><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></td>
                 <td>{{ date('d/m', strtotime($post->created_at)) }}</td>
