@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'is_admin'
+        'email', 'password', 'username', 'is_admin'
     ];
 
     /**
@@ -27,7 +27,17 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
+    }
+
+    public function isAdmin()
+    {
+        if ($this->user_role_id == 121) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

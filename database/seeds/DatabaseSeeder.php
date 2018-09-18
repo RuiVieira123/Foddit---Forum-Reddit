@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
             'id' => 21,
             'role' => 'ROLE_USER'
         ]);
-
         DB::table('user_roles')->insert([
             'id' => 121,
             'role' => 'ROLE_ADMIN'
@@ -27,6 +26,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@foddit.com',
             'user_role_id' => 121,
             'password' => Hash::make('admin'),
+        ]);
+        DB::table('users')->insert([
+            'username' => 'user',
+            'email' => 'user@foddit.com',
+            'user_role_id' => 21,
+            'password' => Hash::make('user'),
         ]);
 
     }

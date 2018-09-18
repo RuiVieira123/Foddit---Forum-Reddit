@@ -24,6 +24,7 @@ Auth::routes();
 Route::resource('/posts', 'PostController');
 Route::resource('/themes', 'ThemeController');
 Route::resource('/comments', 'CommentController');
+Route::resource('/users', 'UserController');
 
 Route::get('/posts/{id}', 'PostController@showUserPosts');
 Route::get('/comments/create/{id}', 'CommentController@store');
