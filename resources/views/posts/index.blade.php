@@ -27,7 +27,7 @@
         </form>
     </div>
     </p>
-
+    <div class="mb-3 clearfix"></div>
 
     <table class="table">
         <thead>
