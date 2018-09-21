@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             'id' => 121,
             'role' => 'ROLE_ADMIN'
         ]);
+        DB::table('user_roles')->insert([
+            'id' => 1,
+            'role' => 'ROLE_BLOCKED'
+        ]);
 
         DB::table('users')->insert([
             'username' => 'admin',

@@ -2,62 +2,36 @@
 
 @section('content')
     <p>
-    <form action="/posts/{{ $post->id }}" method="post">
-        <a href="/posts/" class="btn btn-info">Back</a>
-        @if($user_id == $post->user->id)
-            @if($post->status == true)
-                <a href="/posts/{{ $post->id }}/edit" class="btn btn-success">Edit</a>
-                @method("DELETE")
-                @csrf
-                <input type="submit" class="btn btn-danger" value="Archive">
-            @endif
+    <form action="/users/{{ $user->id }}" method="post">
+        <a href="/users" class="btn btn-info">Back</a>
+        @if($user->user_roles_id != 1)
+            <a href="/users/{{ $user->id }}/edit" class="btn btn-success">Edit</a>
+            @method("DELETE")
+            @csrf
+            <input type="submit" class="btn btn-danger" value="Change status">
         @endif
     </form>
     </p>
-    <h1>{{ $post->title }}</h1><br>
-
-    <div class="form-group">
-        <label>Content</label>
-             @if(empty($post->body ))
-            <pre class="form-control" style="background: #e8ecef">No details needed... :(</pre>
-            @else
-            <pre class="form-control" style="background: #e8ecef">{{ $post->body }}</pre>
-            @endif
-    </div>
-
-    <h4> Submitted by {{ $post->user->username}}</h4>
-
-    <div class="form-group">
-        <label>Comments</label><br>
-        @if($post->status == true)
-            @Auth
-                <form action="/comments/create/{{ $post->id }}" method="get">
-                    <div class="form-group">
-                        <h1>Comment on {{ $post->title }}</h1>
-                        <input hidden name="post_id" value="{{ $post->id }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Comment</label>
-                        <textarea type="text" name="body" class="form-control" placeholder="Say something positive! :)" onkeyup="textAreaAdjust(this)" style="overflow:hidden"></textarea>
-                        <script>
-                            function textAreaAdjust(o) {
-                                o.style.height = "1px";
-                                o.style.height = (25 + o.scrollHeight) + "px";
-                            }
-                        </script>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            @endauth
-        @endif
-        @if(sizeof($post->comments) != 0)
-            @foreach ($post->comments as $comment)
-                <br><p>{{ $comment->user->username }}</p>
-                <pre class="form-control" style="background: #e8ecef">{{ $comment->body }}</pre>
-            @endforeach
-        @else
-            <br><p>Be the first to comment! :)</p> <br>
-        @endif
-    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width: 40%;">Username</th>
+            <th style="width: 45%;">E-mail</th>
+            <th style="width: 15%;">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ $user->username }}</td>
+            <td>{{ $user->email }}</td>
+            <td>
+                @if($user->user_role_id == 1)
+                    Blocked
+                @else
+                    Active
+                @endif
+            </td>
+        </tr>
+        </tbody>
+    </table>
 @endsection

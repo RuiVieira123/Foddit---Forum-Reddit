@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="shortcut icon" type="" href="/imgs/favicon.ico" />
+    <link rel="shortcut icon" type="" href="/imgs/favicon.ico"/>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -91,8 +91,9 @@
     </main>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="/js/posts/upvote.js"></script>
 <script src="/js/posts/filter.search.js"></script>
 <script src="/js/posts/form.js"></script>
+<script src="/js/posts/autosize.js"></script>
+<script src="/js/posts/comment.js"></script>
 </body>
 </html>

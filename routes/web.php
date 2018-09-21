@@ -24,9 +24,9 @@ Auth::routes();
 Route::resource('/posts', 'PostController');
 Route::resource('/themes', 'ThemeController');
 Route::resource('/comments', 'CommentController');
-Route::resource('/users', 'UserController');
+Route::resource('/users', 'UserController')->middleware('admin');
 
-Route::get('/posts/{id}', 'PostController@showUserPosts');
+Route::get('/posts/user/{id}', 'PostController@showUserPosts');
 Route::get('/comments/create/{id}', 'CommentController@store');
 Route::get('/posts/theme/{id}', 'PostController@sortByTheme');
 Route::post('/upvote/{post_id}', 'UserRatedPostController@store');

@@ -8,7 +8,7 @@
     <label>Theme</label>
     <div class="form-group">
         <div class="d-flex">
-            <select id="select_theme" class="form-control col-5" name="theme_id">
+            <select id="select_themes" class="form-control col-5" name="theme_id">
                 <option disabled selected value=''>- - Select theme - -</option>
                 @foreach($themes as $theme)
                     <option name="" value={{$theme->id}}>
